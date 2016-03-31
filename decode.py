@@ -6,6 +6,8 @@
 #
 # outputs a series of:
 #  <line #>:<col #>: <file>:<line #>:<col #> (name #)
+#
+# Includes vlq implementation from https://github.com/martine/python-sourcemap.
 
 import json
 import sys
@@ -63,7 +65,6 @@ class Decoder(object):
                     continue
                 parse = self.parse_vlq(segment)
                 parse += [0] * (5-len(parse))
-                (dc, src, sl, sc, n) = parse
 
                 dst_col += parse[0]
                 src_id += parse[1]
