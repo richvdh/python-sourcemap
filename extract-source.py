@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 # extracts a source file from the sourcemap passed in on stdin
 #
-# eg: curl 'https://vector.im/beta/bundle.js.map' | python-sourcemap/extract-source.py index.js
+# eg: curl 'https://vector.im/beta/bundle.js.map' | ./extract-source.py index.js
 
 from __future__ import print_function
 
