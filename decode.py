@@ -9,6 +9,8 @@
 #
 # Includes vlq implementation from https://github.com/martine/python-sourcemap.
 
+from __future__ import print_function
+
 import json
 import sys
 
@@ -22,5 +24,5 @@ for ln, line in enumerate(line_table):
         seg = line[cn]
         (src_id, src_line, src_col, name_id) = seg
         source = srcmap['sources'][src_id]
-        print "%i:%i: '%s':%i:%i (%i)" % (ln+1, cn, source, src_line+1, src_col,
-                                        name_id)
+        print ("%i:%i: '%s':%i:%i (%i)" %
+               (ln+1, cn, source, src_line+1, src_col, name_id))
