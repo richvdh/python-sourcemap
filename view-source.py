@@ -19,7 +19,7 @@ if len(parts) > 1:
     col = int(parts[1])
 
 srcmap = json.load(sys.stdin)
-line_table = python_sourcemap.decode_mappings(srcmap['mappings'])
+line_table = list(python_sourcemap.decode_mappings(srcmap['mappings']))
 
 if line >= len(line_table):
     print ("%i beyond end of source map" % line, file=sys.stderr)

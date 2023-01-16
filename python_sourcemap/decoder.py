@@ -1,10 +1,16 @@
 # base64 decoder
+from typing import List, Tuple, Dict, Mapping, Iterable
+
 B64 = [0] * 127
 for i, c in enumerate('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'):
     B64[ord(c)] = i
 
+# src_id, src_line, src_col, name_id
+DecodedMapping = Tuple[int, int, int, int]
+
+
 class Decoder(object):
-    def parse_vlq(self, segment):
+    def parse_vlq(self, segment: str) -> List[int]:
         """
         Parse a string of VLQ-encoded data.
 
@@ -36,13 +42,16 @@ class Decoder(object):
 
         return values
 
-    def decode_mappings(self, mappings):
+    def decode_mappings(self, mappings: str) -> Iterable[Mapping[int, DecodedMapping]]:
+        """Decode the source mappings
+
+        @returns:
+            For each line, a dict from column number to its source location
+        """
         src_id, src_line, src_col, name_id = 0, 0, 0, 0
-        line_table = []
 
         for line in mappings.split(';'):
-            line_index = {}
-            line_table.append(line_index)
+            line_index: Dict[int, DecodedMapping] = {}
 
             # dst_col resets every line
             dst_col = 0
@@ -59,5 +68,4 @@ class Decoder(object):
                 name_id += parse[4]
 
                 line_index[dst_col] = (src_id, src_line, src_col, name_id)
-
-        return line_table
+            yield line_index
